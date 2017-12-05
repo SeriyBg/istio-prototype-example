@@ -4,13 +4,31 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
+    <name>istio-example</name>
+    <description>Demo project for Istio Service Mesh</description>
+
     <groupId>com.istio.mesh.example</groupId>
     <artifactId>istio-example</artifactId>
     <version>1.0-SNAPSHOT</version>
+
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>1.5.9.RELEASE</version>
+        <relativePath/> <!-- lookup parent from repository -->
+    </parent>
 
     <modules>
         <module>istio-weather</module>
         <module>istio-location</module>
     </modules>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <optional>true</optional>
+        </dependency>
+    </dependencies>
 
 </project>

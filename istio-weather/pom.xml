@@ -9,13 +9,13 @@
 	<packaging>jar</packaging>
 
 	<name>istio-weather</name>
-	<description>Demo project for Spring Boot</description>
+	<description>Demo project for Istio Service Mesh</description>
 
 	<parent>
-		<groupId>org.springframework.boot</groupId>
-		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>1.5.9.RELEASE</version>
-		<relativePath/> <!-- lookup parent from repository -->
+		<groupId>com.istio.mesh.example</groupId>
+		<artifactId>istio-example</artifactId>
+		<version>1.0-SNAPSHOT</version>
+		<relativePath>../</relativePath> <!-- lookup parent from repository -->
 	</parent>
 
 	<properties>
