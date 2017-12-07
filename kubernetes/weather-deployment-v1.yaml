@@ -1,0 +1,22 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: weather-server-v1
+  labels:
+    app: weather-server
+    version: v1
+spec:
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        app: weather-server
+        version: v1
+        serving: "true"
+    spec:
+      containers:
+      - name: weather-server
+        image: sbishyr/istio-weather-istio
+        ports:
+        - containerPort: 8080
+          name: http
