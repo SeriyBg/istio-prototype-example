@@ -1,15 +1,13 @@
 package com.istio.mesh.example.istioweather;
 
 import lombok.Getter;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.time.Instant;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 
-@Document
 @Getter
 public class Weather {
 
@@ -22,9 +20,9 @@ public class Weather {
         this.city = city;
         temperature = ThreadLocalRandom.current().nextInt(-40, 40);
         description = FORECAST_DESCRIPTION.get(RANDOM.nextInt(FORECAST_DESCRIPTION.size()));
+        when = Instant.now();
     }
 
-    @Id
     private String id;
 
     private String city;
@@ -32,4 +30,6 @@ public class Weather {
     private int temperature;
 
     private String description;
+
+    private Instant when;
 }
