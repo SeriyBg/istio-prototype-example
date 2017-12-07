@@ -9,7 +9,6 @@ public class WeatherController {
 
     @RequestMapping("weather/{city}")
     private Weather getWeather(@PathVariable("city") String city) {
-        final Weather weather = new Weather(city);
-        return weather;
+        return new Weather(city);
     }
 }
