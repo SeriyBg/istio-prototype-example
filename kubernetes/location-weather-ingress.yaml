@@ -2,11 +2,12 @@ apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
   name: location-weather-ingress
+  annotations:
+    ingress.kubernetes.io/rewrite-target: /
 spec:
   rules:
-  - host: weather-location.com
-    http:
+  - http:
       paths:
       - backend:
-        serviceName: location-server
-        servicePort: http
+          serviceName: location-server
+          servicePort: 8080
