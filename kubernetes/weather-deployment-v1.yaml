@@ -18,5 +18,5 @@ spec:
       - name: weather-server
         image: sbishyr/istio-weather-istio
         ports:
-        - containerPort: 8080
+        - containerPort: 8081
           name: http

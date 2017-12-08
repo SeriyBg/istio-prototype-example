@@ -1,0 +1,23 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: location-server
+  labels:
+    app: location-server
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: location-server
+        serving: "true"
+    spec:
+      containers:
+      - name: location-server
+        image: sbishyr/istio-location-istio
+        env:
+        - name: WEATHER_SERVICE_URL
+          value: weather-server
+        ports:
+        - containerPort: 8080
+          name: http
