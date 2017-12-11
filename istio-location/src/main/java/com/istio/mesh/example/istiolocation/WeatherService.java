@@ -1,7 +1,9 @@
 package com.istio.mesh.example.istiolocation;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.client.RestTemplate;
 
+@Slf4j
 public class WeatherService {
 
     private final RestTemplate restTemplate;
@@ -13,6 +15,8 @@ public class WeatherService {
     }
 
     String weather(String city) {
-        return restTemplate.getForObject(endpoint + "/weather/" + city, String.class);
+        final String url = endpoint + "/weather/" + city;
+        log.info("Url: {}", url);
+        return restTemplate.getForObject(url, String.class);
     }
 }

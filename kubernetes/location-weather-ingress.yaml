@@ -8,6 +8,12 @@ spec:
   rules:
   - http:
       paths:
-      - backend:
-          serviceName: location-server
-          servicePort: 8080
+        - path: /location
+          backend:
+            serviceName: location-server
+            servicePort: 8080
+
+        - path: /weather
+          backend:
+            serviceName: weather-server
+            servicePort: 8081
