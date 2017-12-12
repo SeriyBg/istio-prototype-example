@@ -6,14 +6,17 @@ metadata:
     ingress.kubernetes.io/rewrite-target: /
 spec:
   rules:
-  - http:
-      paths:
-        - path: /location
-          backend:
-            serviceName: location-server
-            servicePort: 8080
 
-        - path: /weather
-          backend:
-            serviceName: weather-server
-            servicePort: 8081
+  - host: locations.istio.com
+    http:
+      paths:
+      - backend:
+          serviceName: location-server
+          servicePort: 8080
+
+  - host: weather.istio.com
+    http:
+      paths:
+      - backend:
+          serviceName: weather-server
+          servicePort: 8081
