@@ -3,9 +3,7 @@ package com.istio.mesh.example.istioweather;
 import lombok.Getter;
 
 import java.time.Instant;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
 
 @Getter
@@ -17,6 +15,7 @@ public class Weather {
     private static final Random RANDOM = new Random();
 
     public Weather(String city) {
+        id = UUID.randomUUID().toString();
         this.city = city;
         temperature = ThreadLocalRandom.current().nextInt(-40, 40);
         description = FORECAST_DESCRIPTION.get(RANDOM.nextInt(FORECAST_DESCRIPTION.size()));
