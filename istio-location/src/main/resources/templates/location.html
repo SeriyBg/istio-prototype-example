@@ -5,6 +5,9 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 </head>
 <body>
-    <span th:text="'Weather: ' + ${weather}"></span>
+    <div th:style="'margin-left: auto; margin-right: auto;'">
+        <h2 th:text="'The weather in ' + ${weather.city} + ' for ' +  ${#temporals.format(weather.when, 'dd-MMM-yyyy')}"></h2>
+        <h1 th:text="${weather.description} + ' ' +${weather.temperature} + '°C'"></h1>
+    </div>
 </body>
 </html>

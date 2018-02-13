@@ -1,0 +1,112 @@
+##################################################################################################
+# Location service
+##################################################################################################
+apiVersion: v1
+kind: Service
+metadata:
+  name: location-server
+  labels:
+    app: location-server
+spec:
+#  type: NodePort
+  ports:
+  - port: 8080
+    targetPort: 8080
+    protocol: TCP
+    name: http
+  selector:
+    app: location-server
+    serving: "true"
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: location-server
+  labels:
+    app: location-server
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: location-server
+        serving: "true"
+    spec:
+      containers:
+      - name: location-server
+        image: sbishyr/istio-location-istio
+        env:
+        - name: WEATHER_SERVICE_URL
+          value: http://weather-server:8081
+        ports:
+        - containerPort: 8080
+          name: http
+---
+##################################################################################################
+# Weather service
+##################################################################################################
+apiVersion: v1
+kind: Service
+metadata:
+  name: weather-server
+  labels:
+    app: weather-server
+spec:
+#  type: NodePort
+  ports:
+  - port: 8081
+    targetPort: 8081
+    protocol: TCP
+    name: http
+  selector:
+    app: weather-server
+    serving: "true"
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: weather-server-v1
+  labels:
+    app: weather-server
+    version: "1.0"
+spec:
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        app: weather-server
+        version: "1.0"
+        serving: "true"
+    spec:
+      containers:
+      - name: weather-server
+        image: sbishyr/istio-weather-istio
+        ports:
+        - containerPort: 8081
+          name: http
+---
+##################################################################################################
+# Ingress resource (gateway)
+##################################################################################################
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: location-weather-ingress
+  annotations:
+    kubernetes.io/ingress.class: "istio"
+spec:
+  rules:
+
+  - host: locations.istio.com
+    http:
+      paths:
+      - backend:
+          serviceName: location-server
+          servicePort: 8080
+
+  - host: weather.istio.com
+    http:
+      paths:
+      - backend:
+          serviceName: weather-server
+          servicePort: 8081

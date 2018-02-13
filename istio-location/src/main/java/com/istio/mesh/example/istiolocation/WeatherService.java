@@ -14,9 +14,9 @@ public class WeatherService {
         this.endpoint = endpoint;
     }
 
-    String weather(String city) {
+    Weather weather(String city) {
         final String url = endpoint + "/weather/" + city;
         log.info("Url: {}", url);
-        return restTemplate.getForObject(url, String.class);
+        return restTemplate.getForObject(url, Weather.class);
     }
 }

@@ -3,7 +3,7 @@ kind: Ingress
 metadata:
   name: location-weather-ingress
   annotations:
-    ingress.kubernetes.io/rewrite-target: /
+    kubernetes.io/ingress.class: "istio"
 spec:
   rules:
 
