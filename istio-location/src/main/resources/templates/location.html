@@ -3,11 +3,32 @@
 <head>
     <title>Spring Boot Thymeleaf Hello World Example</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <!-- Bootstrap -->
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
 </head>
 <body>
-    <div th:style="'margin-left: auto; margin-right: auto;'">
-        <h2 th:text="'The weather in ' + ${weather.city} + ' for ' +  ${#temporals.format(weather.when, 'dd-MMM-yyyy')}"></h2>
-        <h1 th:text="${weather.description} + ' ' +${weather.temperature} + '°C'"></h1>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+
+    <div class="jumbotron">
+        <div class="container">
+            <h2 th:class="'display-2'" th:text="'The weather in ' + ${weather.city}"></h2>
+            <span th:class="'my-4'" th:text="${#temporals.format(weather.when, 'dd MMMM yyyy')}"></span>
+            <h1 th:class="'display-1'" th:text="${weather.description} + ' ' +${weather.temperature} + '°C'"></h1>
+        </div>
     </div>
+
 </body>
+<style>
+    html, body {
+        height: 100%;
+        margin: 0;
+    }
+    .jumbotron {
+        display: flex;
+        flex-flow: column;
+        height: 100%;
+    }
+</style>
 </html>
