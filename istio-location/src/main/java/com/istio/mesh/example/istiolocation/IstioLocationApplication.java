@@ -24,4 +24,10 @@ public class IstioLocationApplication {
 								  @Value("${backend.weather-service.url:localhost:8081}") String endpoint) {
 		return new WeatherService(restTemplate,  endpoint);
 	}
+
+	@Bean
+	PhaseService phaseService(RestTemplate restTemplate,
+							  @Value("${backend.phase-service.url:localhost:8082}") String endpoint) {
+        return new PhaseService(restTemplate, endpoint);
+	}
 }

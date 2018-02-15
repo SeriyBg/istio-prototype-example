@@ -15,9 +15,12 @@ spec:
       containers:
       - name: location-server
         image: sbishyr/istio-location-istio
+        imagePullPolicy: Always
         env:
         - name: WEATHER_SERVICE_URL
           value: http://weather-server:8081
+        - name: LUNAR_PHASE_SERVICE_URL
+          value: http://lunar-phase-server:8082
         ports:
         - containerPort: 8080
           name: http

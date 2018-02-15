@@ -1,12 +1,11 @@
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
-  name: weather-server-v1
+  name: lunar-phase-server-v1
   labels:
-    app: weather-server
-    version: "1.0"
+    app: lunar-phase-server
 spec:
-  replicas: 2
+  replicas: 1
   template:
     metadata:
       labels:
@@ -16,8 +15,8 @@ spec:
     spec:
       containers:
       - name: weather-server
-        image: sbishyr/istio-weather-istio
+        image: sbishyr/lunar-phase-istio
         imagePullPolicy: Always
         ports:
-        - containerPort: 8081
+        - containerPort: 8082
           name: http

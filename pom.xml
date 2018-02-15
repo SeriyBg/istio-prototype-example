@@ -26,6 +26,7 @@
     <modules>
         <module>istio-weather</module>
         <module>istio-location</module>
+        <module>lunar-phase</module>
     </modules>
 
     <dependencies>

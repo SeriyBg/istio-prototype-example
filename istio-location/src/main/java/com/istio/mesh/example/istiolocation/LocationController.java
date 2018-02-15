@@ -13,9 +13,13 @@ public class LocationController {
     @Autowired
     private WeatherService weatherService;
 
+    @Autowired
+    private PhaseService phaseService;
+
     @RequestMapping("location/{city}")
     public String location(@PathVariable("city") String city, Map<String, Object> model) {
         model.put("weather", weatherService.weather(city));
+        model.put("lunarPhase", phaseService.lunarPhase(city));
         return "location";
     }
 }

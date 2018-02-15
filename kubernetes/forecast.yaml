@@ -8,7 +8,7 @@ metadata:
   labels:
     app: location-server
 spec:
-#  type: NodePort
+  type: NodePort
   ports:
   - port: 8080
     targetPort: 8080
@@ -34,10 +34,13 @@ spec:
     spec:
       containers:
       - name: location-server
-        image: sbishyr/istio-location-istio
+        image: sbishyr/istio-location-istio:1.0
+        imagePullPolicy: Always
         env:
         - name: WEATHER_SERVICE_URL
           value: http://weather-server:8081
+        - name: LUNAR_PHASE_SERVICE_URL
+          value: http://lunar-phase-server:8082
         ports:
         - containerPort: 8080
           name: http
@@ -80,9 +83,53 @@ spec:
     spec:
       containers:
       - name: weather-server
-        image: sbishyr/istio-weather-istio
+        image: sbishyr/istio-weather-istio:1.0
+        imagePullPolicy: Always
         ports:
         - containerPort: 8081
+          name: http
+---
+##################################################################################################
+# Lunar phase service
+##################################################################################################
+apiVersion: v1
+kind: Service
+metadata:
+  name: lunar-phase-server
+  labels:
+    app: lunar-phase-server
+spec:
+  type: NodePort
+  ports:
+  - port: 8082
+    targetPort: 8082
+    protocol: TCP
+    name: http
+  selector:
+    app: lunar-phase-server
+    serving: "true"
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: lunar-phase-server-v1
+  labels:
+    app: lunar-phase-server
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: weather-server
+        version: "1.0"
+        serving: "true"
+    spec:
+      containers:
+      - name: weather-server
+        image: sbishyr/lunar-phase-istio:1.0
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 8082
           name: http
 ---
 ##################################################################################################
@@ -110,3 +157,10 @@ spec:
       - backend:
           serviceName: weather-server
           servicePort: 8081
+
+  - host: lunar-phase.istio.com
+    http:
+      paths:
+      - backend:
+          serviceName: lunar-phase-server
+          servicePort: 8082

@@ -20,3 +20,10 @@ spec:
       - backend:
           serviceName: weather-server
           servicePort: 8081
+
+  - host: lunar-phase.istio.com
+    http:
+      paths:
+      - backend:
+          serviceName: lunar-phase-server
+          servicePort: 8082
