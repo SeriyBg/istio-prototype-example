@@ -8,10 +8,10 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.web.client.RestTemplate;
 
 @SpringBootApplication
-public class IstioLocationApplication {
+public class IstioForecastApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(IstioLocationApplication.class, args);
+		SpringApplication.run(IstioForecastApplication.class, args);
 	}
 
 	@Bean

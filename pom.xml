@@ -24,8 +24,8 @@
     </properties>
 
     <modules>
-        <module>istio-weather</module>
-        <module>istio-location</module>
+        <module>weather</module>
+        <module>forecast</module>
         <module>lunar-phase</module>
     </modules>
 

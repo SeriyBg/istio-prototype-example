@@ -1,40 +1,40 @@
 ##################################################################################################
-# Location service
+# Forecast service
 ##################################################################################################
 apiVersion: v1
 kind: Service
 metadata:
-  name: location-server
+  name: forecast-server
   labels:
-    app: location-server
+    app: forecast-server
 spec:
-  type: NodePort
+#  type: NodePort
   ports:
   - port: 8080
     targetPort: 8080
     protocol: TCP
     name: http
   selector:
-    app: location-server
+    app: forecast-server
     serving: "true"
 ---
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
-  name: location-server
+  name: forecast-server
   labels:
-    app: location-server
+    app: forecast-server
 spec:
   replicas: 1
   template:
     metadata:
       labels:
-        app: location-server
+        app: forecast-server
         serving: "true"
     spec:
       containers:
       - name: location-server
-        image: sbishyr/istio-location-istio:1.0
+        image: sbishyr/forecast-istio
         imagePullPolicy: Always
         env:
         - name: WEATHER_SERVICE_URL
@@ -138,17 +138,17 @@ spec:
 apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
-  name: location-weather-ingress
+  name: forecast-ingress
   annotations:
     kubernetes.io/ingress.class: "istio"
 spec:
   rules:
 
-  - host: locations.istio.com
+  - host: forecast.istio.com
     http:
       paths:
       - backend:
-          serviceName: location-server
+          serviceName: forecast-server
           servicePort: 8080
 
   - host: weather.istio.com
