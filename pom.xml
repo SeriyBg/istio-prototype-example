@@ -27,6 +27,7 @@
         <module>weather</module>
         <module>forecast</module>
         <module>lunar-phase</module>
+        <module>icons</module>
     </modules>
 
     <dependencies>
