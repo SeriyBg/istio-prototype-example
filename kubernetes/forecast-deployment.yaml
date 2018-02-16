@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: location-server
-        image: sbishyr/forecast-istio
+        image: sbishyr/forecast-istio:1.0
         imagePullPolicy: Always
         env:
         - name: WEATHER_SERVICE_URL

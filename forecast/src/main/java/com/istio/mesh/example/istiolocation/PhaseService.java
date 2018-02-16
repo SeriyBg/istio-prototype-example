@@ -2,6 +2,8 @@ package com.istio.mesh.example.istiolocation;
 
 import org.springframework.web.client.RestTemplate;
 
+import java.time.LocalTime;
+
 public class PhaseService {
 
     private final RestTemplate restTemplate;
@@ -14,6 +16,10 @@ public class PhaseService {
 
     public LunarPhase lunarPhase(String city) {
         final String url = endpoint + "/phase/today/" + city;
-        return restTemplate.getForObject(url, LunarPhase.class);
+        try {
+            return restTemplate.getForObject(url, LunarPhase.class);
+        } catch (Exception e) {
+            return new LunarPhase("Error", LocalTime.MIN, LocalTime.MAX);
+        }
     }
 }

@@ -5,7 +5,7 @@ metadata:
   labels:
     app: lunar-phase-server
 spec:
-  type: NodePort
+#  type: NodePort
   ports:
   - port: 8082
     targetPort: 8082

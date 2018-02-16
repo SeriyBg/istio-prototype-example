@@ -9,13 +9,13 @@ spec:
   template:
     metadata:
       labels:
-        app: weather-server
+        app: lunar-phase-server
         version: "1.0"
         serving: "true"
     spec:
       containers:
       - name: weather-server
-        image: sbishyr/lunar-phase-istio
+        image: sbishyr/lunar-phase-istio:1.0
         imagePullPolicy: Always
         ports:
         - containerPort: 8082

@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: weather-server
-        image: sbishyr/weather-istio
+        image: sbishyr/weather-istio:1.0
         imagePullPolicy: Always
         ports:
         - containerPort: 8081

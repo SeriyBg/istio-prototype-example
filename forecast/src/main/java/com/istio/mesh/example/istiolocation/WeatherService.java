@@ -3,6 +3,8 @@ package com.istio.mesh.example.istiolocation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.client.RestTemplate;
 
+import java.time.LocalDate;
+
 @Slf4j
 public class WeatherService {
 
@@ -17,6 +19,10 @@ public class WeatherService {
     Weather weather(String city) {
         final String url = endpoint + "/weather/" + city;
         log.info("Url: {}", url);
-        return restTemplate.getForObject(url, Weather.class);
+        try {
+            return restTemplate.getForObject(url, Weather.class);
+        } catch (Exception e) {
+            return new Weather("Error", 0, "Error", LocalDate.MIN);
+        }
     }
 }
