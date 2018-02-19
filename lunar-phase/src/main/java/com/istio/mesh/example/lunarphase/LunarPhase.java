@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalTimeDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalTimeSerializer;
 import lombok.Getter;
+import lombok.Setter;
 
 import java.time.LocalTime;
 import java.util.Arrays;
@@ -28,6 +29,9 @@ public class LunarPhase {
     @JsonSerialize(using= LocalTimeSerializer.class)
     @JsonDeserialize(using=LocalTimeDeserializer.class)
     private LocalTime sunrise;
+
+    @Setter
+    private String icon;
 
     LunarPhase(String city) {
         this.city = city;

@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
 import lombok.Getter;
+import lombok.Setter;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
@@ -37,6 +38,9 @@ public class Weather {
     private int temperature;
 
     private String description;
+
+    @Setter
+    private String icon;
 
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
     @JsonSerialize(using= LocalDateSerializer.class)
