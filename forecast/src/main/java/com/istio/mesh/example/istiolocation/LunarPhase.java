@@ -17,6 +17,7 @@ import java.time.LocalTime;
 public class LunarPhase {
 
     private String phase;
+    private String icon;
 
     @JsonSerialize(using= LocalTimeSerializer.class)
     @JsonDeserialize(using=LocalTimeDeserializer.class)

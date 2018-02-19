@@ -18,11 +18,13 @@
             <span th:class="'h4'" th:text="${#temporals.format(weather.when, 'dd MMMM yyyy')}"></span>
             <p></p>
             <span th:class="'h1'" th:text="${weather.description} + ' ' +${weather.temperature} + '°C'"></span>
+            <span th:if="${!#strings.isEmpty(weather.icon)}" th:utext="${weather.icon}"></span>
         </div>
 
         <hr class="col-xs-12"/>
         <div class="container">
             <span th:class="'h2'" th:text="'Moon phase: ' + ${lunarPhase.phase}"></span>
+            <span th:if="${!#strings.isEmpty(lunarPhase.icon)}" th:utext="${lunarPhase.icon}"></span>
             <p></p>
             <span th:class="'h3'" th:text="'Sunrise at ' + ${#temporals.format(lunarPhase.sunrise, 'HH:mm')}"></span>
             <p></p>
@@ -40,6 +42,9 @@
         display: flex;
         flex-flow: column;
         height: 100%;
+    }
+    svg {
+        fill: #474747;
     }
 </style>
 </html>

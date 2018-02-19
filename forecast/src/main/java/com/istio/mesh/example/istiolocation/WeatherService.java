@@ -22,7 +22,7 @@ public class WeatherService {
         try {
             return restTemplate.getForObject(url, Weather.class);
         } catch (Exception e) {
-            return new Weather("Error", 0, "Error", LocalDate.MIN);
+            return new Weather("Error", 0, "Error", null, LocalDate.MIN);
         }
     }
 }

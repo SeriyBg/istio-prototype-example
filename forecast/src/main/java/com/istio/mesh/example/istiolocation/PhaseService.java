@@ -19,7 +19,7 @@ public class PhaseService {
         try {
             return restTemplate.getForObject(url, LunarPhase.class);
         } catch (Exception e) {
-            return new LunarPhase("Error", LocalTime.MIN, LocalTime.MAX);
+            return new LunarPhase("Error", null, LocalTime.MIN, LocalTime.MAX);
         }
     }
 }

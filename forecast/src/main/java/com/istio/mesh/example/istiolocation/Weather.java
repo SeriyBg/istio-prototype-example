@@ -17,6 +17,8 @@ public class Weather {
     private int temperature;
     private String description;
 
+    private String icon;
+
     @JsonSerialize(using= LocalDateSerializer.class)
     @JsonDeserialize(using=LocalDateDeserializer.class)
     private LocalDate when;
