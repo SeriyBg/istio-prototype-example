@@ -1,23 +1,23 @@
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
-  name: weather-server-v1
+  name: icons-server
   labels:
-    app: weather-server
+    app: icons-server
     version: "1.0"
 spec:
   replicas: 1
   template:
     metadata:
       labels:
-        app: weather-server
+        app: icons-server
         version: "1.0"
         serving: "true"
     spec:
       containers:
-      - name: weather-server
-        image: sbishyr/weather-istio:1.0
+      - name: icons-server
+        image: sbishyr/icons-istio:1.0
         imagePullPolicy: Always
         ports:
-        - containerPort: 8081
+        - containerPort: 8083
           name: http

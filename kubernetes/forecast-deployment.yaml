@@ -13,7 +13,7 @@ spec:
         serving: "true"
     spec:
       containers:
-      - name: location-server
+      - name: forecast-server
         image: sbishyr/forecast-istio:1.0
         imagePullPolicy: Always
         env:

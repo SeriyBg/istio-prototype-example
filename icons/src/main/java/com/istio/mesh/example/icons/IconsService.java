@@ -1,14 +1,13 @@
 package com.istio.mesh.example.icons;
 
-import com.google.common.collect.ImmutableMap;
-import org.springframework.core.io.ClassPathResource;
-import org.springframework.stereotype.Component;
-
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Map;
+import com.google.common.collect.ImmutableMap;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.stereotype.Component;
 
 @Component
 public class IconsService {
@@ -35,7 +34,7 @@ public class IconsService {
     public String iconForState(String state) throws IOException {
         String icon = STATE_TO_ICON.get(state);
         if (icon == null) {
-            icon = "Shades.svg";
+            icon = "Umbrella.svg";
         }
         File resource = new ClassPathResource("icons/" + icon).getFile();
         byte[] encoded = Files.readAllBytes(Paths.get(resource.getPath()));

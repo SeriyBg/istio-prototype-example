@@ -1,0 +1,26 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: lunar-phase-server-v2
+  labels:
+    app: lunar-phase-server
+    version: "2.0"
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: lunar-phase-server
+        version: "2.0"
+        serving: "true"
+    spec:
+      containers:
+      - name: weather-server
+        image: sbishyr/lunar-phase-istio:2.0
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 8082
+          name: http
+        env:
+        - name: ICON_SERVICE_URL
+          value: http://icons-server:8083

@@ -1,0 +1,8 @@
+<th:block th:fragment="content" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+    <span th:class="'h2'" th:text="'Moon phase: ' + ${lunarPhase.phase}"></span>
+    <span th:if="${!#strings.isEmpty(lunarPhase.icon)}" th:utext="${lunarPhase.icon}"></span>
+    <p></p>
+    <span th:class="'h3'" th:text="'Sunrise at ' + ${#temporals.format(lunarPhase.sunrise, 'HH:mm')}"></span>
+    <p></p>
+    <span th:class="'h3'" th:text="'Sunset at ' + ${#temporals.format(lunarPhase.sunset, 'HH:mm')}"></span>
+</th:block>

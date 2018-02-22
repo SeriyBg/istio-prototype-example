@@ -1,0 +1,42 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Spring Boot Thymeleaf Hello World Example</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <!-- Bootstrap -->
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
+</head>
+<body>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+
+    <div class="jumbotron">
+        <div id="weather-container" class="container"></div>
+        <hr class="col-xs-12"/>
+        <div id="lunar-phase-container" class="container"></div>
+    </div>
+</body>
+<style>
+    html, body {
+        height: 100%;
+        margin: 0;
+    }
+    .jumbotron {
+        display: flex;
+        flex-flow: column;
+        height: 100%;
+    }
+    svg {
+        fill: #474747;
+    }
+</style>
+<script>
+    /*<![CDATA[*/
+    (function(){
+        $("#weather-container").load("/weather/London");
+        $("#lunar-phase-container").load("/phase/London");
+    }());
+    /*]]>*/
+</script>
+</html>
