@@ -1,12 +1,12 @@
 package com.istio.mesh.example.icons;
 
-import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
+import java.io.InputStream;
 import java.util.Map;
 import com.google.common.collect.ImmutableMap;
-import org.springframework.core.io.ClassPathResource;
+import org.apache.commons.io.IOUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ResourceLoader;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -31,13 +31,20 @@ public class IconsService {
             .put("Waning crescent", "Moon-Waning-Crescent.svg")
             .build();
 
+    private final ResourceLoader resourceLoader;
+
+    @Autowired
+    public IconsService(ResourceLoader resourceLoader) {
+        this.resourceLoader = resourceLoader;
+    }
+
     public String iconForState(String state) throws IOException {
         String icon = STATE_TO_ICON.get(state);
         if (icon == null) {
             icon = "Umbrella.svg";
         }
-        File resource = new ClassPathResource("icons/" + icon).getFile();
-        byte[] encoded = Files.readAllBytes(Paths.get(resource.getPath()));
+        InputStream resource = resourceLoader.getResource("classpath:icons/" + icon).getInputStream();
+        byte[] encoded = IOUtils.toByteArray(resource);
         return new String(encoded);
     }
 }
