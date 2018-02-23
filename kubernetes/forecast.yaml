@@ -1,12 +1,261 @@
 ##################################################################################################
 # Forecast service
 ##################################################################################################
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: forecast-server
+  labels:
+    app: forecast-server
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: forecast-server
+        serving: "true"
+    spec:
+      containers:
+      - name: forecast-server
+        image: sbishyr/forecast-istio:1.0
+        imagePullPolicy: Always
+        env:
+        - name: WEATHER_SERVICE_URL
+          value: http://weather-server:8081
+        - name: LUNAR_PHASE_SERVICE_URL
+          value: http://lunar-phase-server:8082
+        ports:
+        - containerPort: 8080
+          name: http
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: forecast-server
+  labels:
+    app: forecast-server
+spec:
+  type: NodePort
+  ports:
+  - port: 8080
+    targetPort: 8080
+    protocol: TCP
+    name: http
+  selector:
+    app: forecast-server
+    serving: "true"
+---
 ##################################################################################################
 # Weather service
 ##################################################################################################
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: weather-server-v1
+  labels:
+    app: weather-server
+    version: "1.0"
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: weather-server
+        version: "1.0"
+        serving: "true"
+    spec:
+      containers:
+      - name: weather-server
+        image: sbishyr/weather-istio:1.0
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 8081
+          name: http
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: weather-server-v2
+  labels:
+    app: weather-server
+    version: "2.0"
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: weather-server
+        version: "2.0"
+        serving: "true"
+    spec:
+      containers:
+      - name: weather-server
+        image: sbishyr/weather-istio:2.0
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 8081
+          name: http
+        env:
+        - name: ICON_SERVICE_URL
+          value: http://icons-server:8083
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: weather-server
+  labels:
+    app: weather-server
+spec:
+  ports:
+  - port: 8081
+    targetPort: 8081
+    protocol: TCP
+    name: http
+  selector:
+    app: weather-server
+    serving: "true"
+---
 ##################################################################################################
 # Lunar phase service
 ##################################################################################################
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: lunar-phase-server-v1
+  labels:
+    app: lunar-phase-server
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: lunar-phase-server
+        version: "1.0"
+        serving: "true"
+    spec:
+      containers:
+      - name: weather-server
+        image: sbishyr/lunar-phase-istio:1.0
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 8082
+          name: http
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: lunar-phase-server-v2
+  labels:
+    app: lunar-phase-server
+    version: "2.0"
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: lunar-phase-server
+        version: "2.0"
+        serving: "true"
+    spec:
+      containers:
+      - name: weather-server
+        image: sbishyr/lunar-phase-istio:2.0
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 8082
+          name: http
+        env:
+        - name: ICON_SERVICE_URL
+          value: http://icons-server:8083
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: lunar-phase-server
+  labels:
+    app: lunar-phase-server
+spec:
+  ports:
+  - port: 8082
+    targetPort: 8082
+    protocol: TCP
+    name: http
+  selector:
+    app: lunar-phase-server
+    serving: "true"
+---
+##################################################################################################
+# Icons service
+##################################################################################################
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: icons-server
+  labels:
+    app: icons-server
+    version: "1.0"
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: icons-server
+        version: "1.0"
+        serving: "true"
+    spec:
+      containers:
+      - name: icons-server
+        image: sbishyr/icons-istio:1.0
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 8083
+          name: http
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: icons-server
+  labels:
+    app: icons-server
+spec:
+  ports:
+  - port: 8083
+    targetPort: 8083
+    protocol: TCP
+    name: http
+  selector:
+    app: icons-server
+    serving: "true"
+---
 ##################################################################################################
 # Ingress resource (gateway)
 ##################################################################################################
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: forecast-ingress
+  annotations:
+    kubernetes.io/ingress.class: "istio"
+spec:
+  rules:
+
+  - host: forecast.istio.com
+    http:
+      paths:
+      - backend:
+          serviceName: forecast-server
+          servicePort: 8080
+
+  - host: weather.istio.com
+    http:
+      paths:
+      - backend:
+          serviceName: weather-server
+          servicePort: 8081
+
+  - host: lunar-phase.istio.com
+    http:
+      paths:
+      - backend:
+          serviceName: lunar-phase-server
+          servicePort: 8082
