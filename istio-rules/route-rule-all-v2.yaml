@@ -1,0 +1,23 @@
+apiVersion: config.istio.io/v1alpha2
+kind: RouteRule
+metadata:
+  name: weather-default
+spec:
+  destination:
+    name: weather-server
+  precedence: 1
+  route:
+  - labels:
+      version: "2.0"
+---
+apiVersion: config.istio.io/v1alpha2
+kind: RouteRule
+metadata:
+  name: lunar-phase-default
+spec:
+  destination:
+    name: lunar-phase-server
+  precedence: 1
+  route:
+  - labels:
+      version: "2.0"
