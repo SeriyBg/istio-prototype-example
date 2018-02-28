@@ -5,4 +5,6 @@
     <span th:class="'h3'" th:text="'Sunrise at ' + ${#temporals.format(lunarPhase.sunrise, 'HH:mm')}"></span>
     <p></p>
     <span th:class="'h3'" th:text="'Sunset at ' + ${#temporals.format(lunarPhase.sunset, 'HH:mm')}"></span>
+    <p></p>
+    <span th:if="${lunarPhase.currentTime != null}" th:class="'h3'" th:text="'GMT time: ' + ${#temporals.format(lunarPhase.currentTime, 'HH:mm')}"></span>
 </th:block>

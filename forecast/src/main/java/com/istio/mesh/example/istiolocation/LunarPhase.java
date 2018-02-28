@@ -1,5 +1,6 @@
 package com.istio.mesh.example.istiolocation;
 
+import java.time.LocalTime;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalTimeDeserializer;
@@ -8,8 +9,6 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
-import java.time.LocalTime;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -26,4 +25,8 @@ public class LunarPhase {
     @JsonSerialize(using= LocalTimeSerializer.class)
     @JsonDeserialize(using=LocalTimeDeserializer.class)
     private LocalTime sunrise;
+
+    @JsonSerialize(using= LocalTimeSerializer.class)
+    @JsonDeserialize(using=LocalTimeDeserializer.class)
+    private LocalTime currentTime;
 }

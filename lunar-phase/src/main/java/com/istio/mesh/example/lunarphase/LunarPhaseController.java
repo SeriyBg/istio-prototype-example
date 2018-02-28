@@ -16,6 +16,9 @@ public class LunarPhaseController {
     @Autowired
     private IconService iconService;
 
+    @Autowired
+    private TimeService timeService;
+
     @GetMapping("/phase/today/{city}")
     public LunarPhase lunarPhase(@PathVariable("city") String city, HttpServletRequest request) {
         LunarPhase lunarPhase = new LunarPhase(city);
@@ -25,6 +28,7 @@ public class LunarPhaseController {
             httpHeaders.add(traceHeader, request.getHeader(traceHeader));
         }
         lunarPhase.setIcon(iconService.icon(lunarPhase.getPhase(), httpHeaders));
+        lunarPhase.setCurrentTime(timeService.jsonTime(httpHeaders));
         return lunarPhase;
     }
 }

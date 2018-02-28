@@ -24,7 +24,7 @@ public class PhaseService {
                     restTemplate.exchange(url, HttpMethod.GET, new HttpEntity<>("parameters", headers), LunarPhase.class);
             return exchange.getBody();
         } catch (Exception e) {
-            return new LunarPhase("Error", null, LocalTime.MIN, LocalTime.MAX);
+            return new LunarPhase("Error", null, LocalTime.MIN, LocalTime.MAX, null);
         }
     }
 }

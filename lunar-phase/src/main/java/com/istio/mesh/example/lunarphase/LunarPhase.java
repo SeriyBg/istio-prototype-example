@@ -1,16 +1,15 @@
 package com.istio.mesh.example.lunarphase;
 
+import java.time.LocalTime;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Random;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalTimeDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalTimeSerializer;
 import lombok.Getter;
 import lombok.Setter;
-
-import java.time.LocalTime;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Random;
 
 @Getter
 public class LunarPhase {
@@ -32,6 +31,11 @@ public class LunarPhase {
 
     @Setter
     private String icon;
+
+    @Setter
+    @JsonSerialize(using= LocalTimeSerializer.class)
+    @JsonDeserialize(using=LocalTimeDeserializer.class)
+    private LocalTime currentTime;
 
     LunarPhase(String city) {
         this.city = city;

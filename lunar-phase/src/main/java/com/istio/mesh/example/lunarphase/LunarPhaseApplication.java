@@ -23,4 +23,9 @@ public class LunarPhaseApplication {
                             @Value("${backend.icon-service.url:localhost:8083}") String endpoint) {
         return new IconService(restTemplate, endpoint);
     }
+
+    @Bean
+    TimeService timeService(RestTemplate restTemplate) {
+        return new TimeService(restTemplate);
+    }
 }
