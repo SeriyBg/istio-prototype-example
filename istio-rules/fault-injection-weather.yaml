@@ -5,6 +5,7 @@ metadata:
 spec:
   destination:
     name: weather-server
+  precedence: 3
   route:
   - labels:
       version: "1.0"

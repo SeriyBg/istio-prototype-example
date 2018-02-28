@@ -1,6 +1,10 @@
 package com.istio.mesh.example.istioweather;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 
 @Slf4j
@@ -14,9 +18,11 @@ public class IconService {
         this.endpoint = endpoint;
     }
 
-    public String icon(String state) {
+    public String icon(String state, HttpHeaders headers) {
         try {
-            return restTemplate.getForObject(endpoint + "/icon/" + state, String.class);
+            ResponseEntity<String> entity =
+                    restTemplate.exchange(endpoint + "/icon/" + state, HttpMethod.GET, new HttpEntity<>("parameters", headers), String.class);
+            return entity.getBody();
         } catch (Exception e) {
             return null;
         }
