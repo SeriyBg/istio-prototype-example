@@ -25,6 +25,18 @@ public class LocationController {
         return "forecast";
     }
 
+    @RequestMapping("content/{city}")
+    public String content(@PathVariable("city") String city, HttpServletRequest request, Map<String, Object> model) {
+        HttpHeaders httpHeaders = new HttpHeaders();
+        httpHeaders.add(USER_AGENT, request.getHeader(USER_AGENT));
+        for (String traceHeader : TRACE_HEADERS) {
+            httpHeaders.add(traceHeader, request.getHeader(traceHeader));
+        }
+        model.put("weather", weatherService.weather(city, httpHeaders));
+        model.put("lunarPhase", phaseService.lunarPhase(city, httpHeaders));
+        return "content";
+    }
+
     @RequestMapping("weather/{city}")
     public String weather(@PathVariable("city") String city, HttpServletRequest request, Map<String, Object> model) {
         HttpHeaders httpHeaders = new HttpHeaders();

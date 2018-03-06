@@ -1,0 +1,18 @@
+<th:block th:fragment="content" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+    <span th:class="'h1'" th:text="'The weather in ' + ${weather.city}"></span>
+    <p></p>
+    <span th:class="'h4'" th:text="${#temporals.format(weather.when, 'dd MMMM yyyy')}"></span>
+    <p></p>
+    <span th:class="'h1'" th:text="${weather.description} + ' ' +${weather.temperature} + '°C'"></span>
+    <span th:if="${!#strings.isEmpty(weather.icon)}" th:utext="${weather.icon}"></span>
+    <p></p>
+    <hr class="col-xs-12"/>
+    <span th:class="'h2'" th:text="'Moon phase: ' + ${lunarPhase.phase}"></span>
+    <span th:if="${!#strings.isEmpty(lunarPhase.icon)}" th:utext="${lunarPhase.icon}"></span>
+    <p></p>
+    <span th:class="'h3'" th:text="'Sunrise at ' + ${#temporals.format(lunarPhase.sunrise, 'HH:mm')}"></span>
+    <p></p>
+    <span th:class="'h3'" th:text="'Sunset at ' + ${#temporals.format(lunarPhase.sunset, 'HH:mm')}"></span>
+    <p></p>
+    <span th:if="${lunarPhase.currentTime != null}" th:class="'h3'" th:text="'GMT time: ' + ${#temporals.format(lunarPhase.currentTime, 'HH:mm')}"></span>
+</th:block>
