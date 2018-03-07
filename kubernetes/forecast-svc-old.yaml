@@ -1,9 +1,9 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: forecast-server
+  name: forecast-server-old
   labels:
-    app: forecast-server
+    app: forecast-server-old
 spec:
   type: NodePort
   ports:
@@ -12,6 +12,6 @@ spec:
     protocol: TCP
     name: http
   selector:
-    app: forecast-server
+    app: forecast-server-old
     serving: "true"
-    version: "2.0"
+    version: "1.0"

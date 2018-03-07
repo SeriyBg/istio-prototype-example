@@ -1,21 +1,21 @@
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
-  name: forecast-server
+  name: forecast-server-old
   labels:
-    app: forecast-server
+    app: forecast-server-old
 spec:
   replicas: 1
   template:
     metadata:
       labels:
-        app: forecast-server
+        app: forecast-server-old
         serving: "true"
-        version: "2.0"
+        version: "1.0"
     spec:
       containers:
-      - name: forecast-server
-        image: sbishyr/forecast-istio:2.0
+      - name: forecast-server-old
+        image: sbishyr/forecast-istio:1.0
         imagePullPolicy: Always
         env:
         - name: WEATHER_SERVICE_URL

@@ -7,23 +7,16 @@ metadata:
 spec:
   rules:
 
-  - host: forecast.istio.com
-    http:
+  - http:
       paths:
-      - backend:
+      - path: /v2/.*
+        backend:
           serviceName: forecast-server
           servicePort: 8080
 
-  - host: weather.istio.com
-    http:
+  - http:
       paths:
-      - backend:
-          serviceName: weather-server
-          servicePort: 8081
-
-  - host: lunar-phase.istio.com
-    http:
-      paths:
-      - backend:
-          serviceName: lunar-phase-server
-          servicePort: 8082
+      - path: /v1/.*
+        backend:
+          serviceName: forecast-server-old
+          servicePort: 8080
