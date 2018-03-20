@@ -1,0 +1,37 @@
+apiVersion: config.istio.io/v1alpha2
+kind: RouteRule
+metadata:
+  name: ingress-forecast-v2-rewrite
+  namespace: default
+spec:
+  destination:
+    name: forecast-server
+  match:
+    request:
+      headers:
+        uri:
+          prefix: /v2
+  rewrite:
+    uri: /
+  route:
+  - labels:
+      version: "2.0"
+---
+apiVersion: config.istio.io/v1alpha2
+kind: RouteRule
+metadata:
+  name: ingress-forecast-v1-rewrite
+  namespace: default
+spec:
+  destination:
+    name: forecast-server-old
+  match:
+    request:
+      headers:
+        uri:
+          prefix: /v1
+  rewrite:
+    uri: /
+  route:
+  - labels:
+      version: "1.0"

@@ -1,0 +1,17 @@
+apiVersion: config.istio.io/v1alpha2
+kind: RouteRule
+metadata:
+  name: weather-v2
+spec:
+  destination:
+    name: weather-server
+  precedence: 2
+  match:
+    request:
+      headers:
+        uri:
+          regex: ".*"
+  httpFault:
+    abort:
+      percent: 100
+      httpStatus: 400
