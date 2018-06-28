@@ -1,0 +1,25 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: weather-default
+spec:
+  hosts:
+  - weather-server
+  http:
+  - route:
+    - destination:
+        host: weather-server
+        subset: v1
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: lunar-phase-default
+spec:
+  hosts:
+  - lunar-phase-server
+  http:
+  - route:
+    - destination:
+        host: lunar-phase-server
+        subset: v1

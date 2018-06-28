@@ -7,7 +7,7 @@
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
 </head>
-s<body>
+<body>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 
@@ -51,8 +51,9 @@ s<body>
 <script>
     /*<![CDATA[*/
     (function(){
-        $("#weather-container").load("../weather/London");
-        $("#lunar-phase-container").load("../phase/London");
+        var locatin = document.URL.substring(document.URL.lastIndexOf("/") + 1);
+        $("#weather-container").load("../weather/" + locatin);
+        $("#lunar-phase-container").load("../phase/" + locatin);
     }());
     /*]]>*/
 </script>

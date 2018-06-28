@@ -47,12 +47,14 @@
                     <configuration>
                         <repository>${docker.image.prefix}/${project.artifactId}-istio</repository>
                         <tag>1.0</tag>
+                        <useMavenSettingsForAuth>true</useMavenSettingsForAuth>
                     </configuration>
                     <executions>
                         <execution>
                             <phase>package</phase>
                             <goals>
                                 <goal>build</goal>
+                                <goal>push</goal>
                             </goals>
                         </execution>
                     </executions>

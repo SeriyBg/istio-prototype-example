@@ -36,7 +36,7 @@ metadata:
   labels:
     app: forecast-server
 spec:
-  type: NodePort
+  type: LoadBalancer
   ports:
   - port: 8080
     targetPort: 8080
@@ -85,7 +85,7 @@ metadata:
   labels:
     app: forecast-server-old
 spec:
-  type: NodePort
+  type: LoadBalancer
   ports:
   - port: 8080
     targetPort: 8080
@@ -185,7 +185,7 @@ spec:
         serving: "true"
     spec:
       containers:
-      - name: weather-server
+      - name: lunar-phase-server
         image: sbishyr/lunar-phase-istio:1.0
         imagePullPolicy: Always
         ports:
@@ -209,7 +209,7 @@ spec:
         serving: "true"
     spec:
       containers:
-      - name: weather-server
+      - name: lunar-phase-server
         image: sbishyr/lunar-phase-istio:2.0
         imagePullPolicy: Always
         ports:

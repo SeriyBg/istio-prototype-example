@@ -1,7 +1,7 @@
 package com.istio.mesh.example.istiolocation;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.Map;
+import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Controller;
@@ -27,23 +27,22 @@ public class LocationController {
 
     @RequestMapping("weather/{city}")
     public String weather(@PathVariable("city") String city, HttpServletRequest request, Map<String, Object> model) {
-        HttpHeaders httpHeaders = new HttpHeaders();
-        httpHeaders.add(USER_AGENT, request.getHeader(USER_AGENT));
-        for (String traceHeader : TRACE_HEADERS) {
-            httpHeaders.add(traceHeader, request.getHeader(traceHeader));
-        }
-        model.put("weather", weatherService.weather(city, httpHeaders));
+        model.put("weather", weatherService.weather(city, getForwardHeaders(request)));
         return "weather";
     }
 
     @RequestMapping("phase/{city}")
     public String phase(@PathVariable("city") String city, HttpServletRequest request, Map<String, Object> model) {
+        model.put("lunarPhase", phaseService.lunarPhase(city, getForwardHeaders(request)));
+        return "phase";
+    }
+
+    private HttpHeaders getForwardHeaders(HttpServletRequest request) {
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.add(USER_AGENT, request.getHeader(USER_AGENT));
         for (String traceHeader : TRACE_HEADERS) {
             httpHeaders.add(traceHeader, request.getHeader(traceHeader));
         }
-        model.put("lunarPhase", phaseService.lunarPhase(city, httpHeaders));
-        return "phase";
+        return httpHeaders;
     }
 }

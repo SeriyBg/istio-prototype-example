@@ -1,0 +1,34 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: weather-timeout
+spec:
+  hosts:
+  - weather-server
+  http:
+  - route:
+    - destination:
+        host: weather-server
+        subset: v1
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: lunar-phase-timeout
+spec:
+  hosts:
+  - lunar-phase-server
+  http:
+  - match:
+    - headers:
+        user-agent:
+          regex: ".*(iPad|Android|iPhone).*"
+    route:
+    - destination:
+        host: lunar-phase-server
+        subset: v2
+    timeout: 5s
+  - route:
+    - destination:
+        host: lunar-phase-server
+        subset: v2
