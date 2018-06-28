@@ -1,0 +1,19 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: weather-retries
+spec:
+  hosts:
+  - weather-server
+  http:
+  - route:
+    - destination:
+        host: weather-server
+        subset: v2
+    fault:
+      abort:
+        httpStatus: 400
+        percent: 50
+    retries:
+      attempts: 3
+      perTryTimeout: 5s
