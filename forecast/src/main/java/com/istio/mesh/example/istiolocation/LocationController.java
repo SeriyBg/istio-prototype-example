@@ -49,6 +49,9 @@ public class LocationController {
         httpHeaders.add(USER_AGENT, request.getHeader(USER_AGENT));
         for (String traceHeader : TRACE_HEADERS) {
             String header = request.getHeader(traceHeader);
+            if (header == null) {
+                header = "";
+            }
             LOG.info("Header - " + traceHeader + ": " + header);
             httpHeaders.add(traceHeader, header);
         }
