@@ -257,7 +257,8 @@ spec:
       containers:
       - name: icons-server
         image: sbishyr/icons-istio:1.0
-        imagePullPolicy: Always
+
+
         ports:
         - containerPort: 8083
           name: http

@@ -1,5 +1,6 @@
 package com.istio.mesh.example.istioweather;
 
+import java.util.logging.Logger;
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -10,19 +11,27 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class WeatherController {
 
+    private static final Logger LOG = Logger.getLogger(WeatherController.class.getName());
+
     private static final String USER_AGENT = "user-agent";
     private static final String[] TRACE_HEADERS = new String[] {"x-request-id", "x-b3-traceid", "x-b3-spanid", "x-b3-parentspanid", "x-b3-sampled", "x-b3-flags", "x-ot-span-context"};
 
-    @Autowired
-    private IconService iconService;
+    private final IconService iconService;
 
-    @GetMapping("weather/{city}")
-    private Weather weather(@PathVariable("city") String city, HttpServletRequest request) {
+    @Autowired
+    public WeatherController(IconService iconService) {
+        this.iconService = iconService;
+    }
+
+    @GetMapping("/weather/{city}")
+    public Weather weather(@PathVariable("city") String city, HttpServletRequest request) {
         Weather weather = new Weather(city);
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.add(USER_AGENT, request.getHeader(USER_AGENT));
         for (String traceHeader : TRACE_HEADERS) {
-            httpHeaders.add(traceHeader, request.getHeader(traceHeader));
+            String header = request.getHeader(traceHeader);
+            LOG.info("Header - " + traceHeader + ": " + header);
+            httpHeaders.add(traceHeader, header);
         }
         weather.setIcon(iconService.icon(weather.getDescription(), httpHeaders));
         return weather;

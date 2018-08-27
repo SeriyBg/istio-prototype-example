@@ -1,6 +1,7 @@
 package com.istio.mesh.example.istiolocation;
 
 import java.util.Map;
+import java.util.logging.Logger;
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -11,14 +12,20 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 public class LocationController {
 
+    private static final Logger LOG = Logger.getLogger(LocationController.class.getName());
+
     private static final String USER_AGENT = "user-agent";
     private static final String[] TRACE_HEADERS = new String[] {"x-request-id", "x-b3-traceid", "x-b3-spanid", "x-b3-parentspanid", "x-b3-sampled", "x-b3-flags", "x-ot-span-context"};
 
-    @Autowired
-    private WeatherService weatherService;
+    private final WeatherService weatherService;
+
+    private final PhaseService phaseService;
 
     @Autowired
-    private PhaseService phaseService;
+    public LocationController(WeatherService weatherService, PhaseService phaseService) {
+        this.weatherService = weatherService;
+        this.phaseService = phaseService;
+    }
 
     @RequestMapping("forecast/{city}")
     public String index(@PathVariable("city") String city, Map<String, Object> model) {
@@ -41,7 +48,9 @@ public class LocationController {
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.add(USER_AGENT, request.getHeader(USER_AGENT));
         for (String traceHeader : TRACE_HEADERS) {
-            httpHeaders.add(traceHeader, request.getHeader(traceHeader));
+            String header = request.getHeader(traceHeader);
+            LOG.info("Header - " + traceHeader + ": " + header);
+            httpHeaders.add(traceHeader, header);
         }
         return httpHeaders;
     }
