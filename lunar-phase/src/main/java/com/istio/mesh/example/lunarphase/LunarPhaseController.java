@@ -2,6 +2,7 @@ package com.istio.mesh.example.lunarphase;
 
 import java.util.logging.Logger;
 import javax.servlet.http.HttpServletRequest;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -33,6 +34,9 @@ public class LunarPhaseController {
         for (String traceHeader : TRACE_HEADERS) {
             String header = request.getHeader(traceHeader);
             LOG.info("Header - " + traceHeader + ": " + header);
+            if (StringUtils.isEmpty(header)) {
+                continue;
+            }
             httpHeaders.add(traceHeader, header);
         }
         lunarPhase.setIcon(iconService.icon(lunarPhase.getPhase(), httpHeaders));

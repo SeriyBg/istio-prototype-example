@@ -3,6 +3,7 @@ package com.istio.mesh.example.istiolocation;
 import java.util.Map;
 import java.util.logging.Logger;
 import javax.servlet.http.HttpServletRequest;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Controller;
@@ -49,8 +50,8 @@ public class LocationController {
         httpHeaders.add(USER_AGENT, request.getHeader(USER_AGENT));
         for (String traceHeader : TRACE_HEADERS) {
             String header = request.getHeader(traceHeader);
-            if (header == null) {
-                header = "";
+            if (StringUtils.isEmpty(header)) {
+                continue;
             }
             LOG.info("Header - " + traceHeader + ": " + header);
             httpHeaders.add(traceHeader, header);

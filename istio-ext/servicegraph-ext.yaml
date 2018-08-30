@@ -19,9 +19,9 @@ spec:
     spec:
       containers:
         - name: servicegraph
-          image: "docker.io/sbishyr/servicegraph:0.8.0"
+#          image: "docker.io/sbishyr/servicegraph:0.8.0"
 #          The servicegraph image with service -> workload metrics transition
-#          image: "docker.io/sbishyr/servicegraph:1.0.0"
+          image: "docker.io/sbishyr/servicegraph:1.0.0"
           imagePullPolicy: Always
           ports:
             - containerPort: 8088
