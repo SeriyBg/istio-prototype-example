@@ -1,0 +1,68 @@
+# Forecast service
+apiVersion: networking.istio.io/v1alpha3
+kind: DestinationRule
+metadata:
+  name: forecast-server
+spec:
+  host: forecast-server
+  trafficPolicy:
+    tls:
+      mode: ISTIO_MUTUAL
+  subsets:
+  - name: v2
+    labels:
+      version: "2.0"
+  - name: v1
+    labels:
+      version: "1.0"
+---
+# Weather service
+apiVersion: networking.istio.io/v1alpha3
+kind: DestinationRule
+metadata:
+  name: weather-server
+spec:
+  host: weather-server
+  trafficPolicy:
+    tls:
+      mode: ISTIO_MUTUAL
+  subsets:
+  - name: v1
+    labels:
+      version: "1.0"
+  - name: v2
+    labels:
+      version: "2.0"
+---
+# Lunar phase service
+apiVersion: networking.istio.io/v1alpha3
+kind: DestinationRule
+metadata:
+  name: lunar-phase-server
+spec:
+  host: lunar-phase-server
+  trafficPolicy:
+    tls:
+      mode: ISTIO_MUTUAL
+  subsets:
+  - name: v1
+    labels:
+      version: "1.0"
+  - name: v2
+    labels:
+      version: "2.0"
+---
+# Icons service
+apiVersion: networking.istio.io/v1alpha3
+kind: DestinationRule
+metadata:
+  name: icons-server
+spec:
+  host: icons-server
+  trafficPolicy:
+    tls:
+      mode: ISTIO_MUTUAL
+  subsets:
+  - name: v1
+    labels:
+      serving: "true"

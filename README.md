@@ -20,11 +20,29 @@
   ```bash
   kubectl apply -f kubernetes/forecast-ingress.yaml
   ```
+  
+## Applying Istio destination rules
+### Unencrypted service-to-service traffic
 - Apply the `DestinationRule` for the deployed services:
   ```bash
   istioctl create -f istio-rules/destination-rules.yaml
   ```
-
+### Mutual TLS service-to-service traffic
+- Apply the `Policy` to enable mTLS traffic inside the cluster.
+  
+  for strict mTLS traffic:
+  ```bash
+  istioctl create -f istio-rules/mtls-strict.yaml
+  ```
+  for allowing mTLS and unencrypted traffic:
+    ```bash
+    istioctl create -f istio-rules/mtls-permissive.yaml   
+    ```
+- Apply the `DestinationRule` for the deployed services:
+  ```bash
+  istioctl create -f istio-rules/destination-rules-mtls.yaml
+  ```
+  
 ## Applying Istio rules
 The following section describes the rules in `/istio-rules` folder.
 You can apply and delete each rules by running 
@@ -48,4 +66,11 @@ export SECURE_INGRESS_PORT=$(kubectl -n istio-system get service istio-ingressga
 export INGRESS_HOST=$(minikube ip)
 export GATEWAY_URL=$INGRESS_HOST:$INGRESS_PORT
 curl http://${GATEWAY_URL}/forecast/Lviv
+```
+
+## Additional setting
+To have access to custom build of `servicegraph` execute the following commands:
+```bash
+kubectl delete -f istio-ext/servicegraph-ext.yaml
+kubectl create -f istio-ext/servicegraph-ext.yaml
 ```
