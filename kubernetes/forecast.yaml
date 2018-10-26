@@ -48,55 +48,6 @@ spec:
     version: "2.0"
 ---
 ##################################################################################################
-# Forecast service (1.0)
-##################################################################################################
-apiVersion: extensions/v1beta1
-kind: Deployment
-metadata:
-  name: forecast-server-old
-  labels:
-    app: forecast-server-old
-spec:
-  replicas: 1
-  template:
-    metadata:
-      labels:
-        app: forecast-server-old
-        serving: "true"
-        version: "1.0"
-    spec:
-      containers:
-      - name: forecast-server-old
-        image: sbishyr/forecast-istio:1.0
-        imagePullPolicy: Always
-        env:
-        - name: WEATHER_SERVICE_URL
-          value: http://weather-server:8081
-        - name: LUNAR_PHASE_SERVICE_URL
-          value: http://lunar-phase-server:8082
-        ports:
-        - containerPort: 8080
-          name: http
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: forecast-server-old
-  labels:
-    app: forecast-server-old
-spec:
-  type: LoadBalancer
-  ports:
-  - port: 8080
-    targetPort: 8080
-    protocol: TCP
-    name: http
-  selector:
-    app: forecast-server-old
-    serving: "true"
-    version: "1.0"
----
-##################################################################################################
 # Weather service
 ##################################################################################################
 apiVersion: extensions/v1beta1
@@ -278,29 +229,3 @@ spec:
   selector:
     app: icons-server
     serving: "true"
----
-##################################################################################################
-# Ingress resource (gateway)
-##################################################################################################
-apiVersion: extensions/v1beta1
-kind: Ingress
-metadata:
-  name: forecast-ingress
-  annotations:
-    kubernetes.io/ingress.class: "istio"
-spec:
-  rules:
-
-  - http:
-      paths:
-      - path: /v2/.*
-        backend:
-          serviceName: forecast-server
-          servicePort: 8080
-
-  - http:
-      paths:
-      - path: /v1/.*
-        backend:
-          serviceName: forecast-server-old
-          servicePort: 8080
